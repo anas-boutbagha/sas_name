@@ -221,7 +221,7 @@ do {
                         break;}
 
                 }
-                }while(mini_option!=1||mini_option!=2)
+                }while(mini_option!=0)
                 p("continu ....")
                 console.clear()
                 break;
@@ -306,7 +306,7 @@ do {
                         break;}
 
                 }
-                }while(mini_option!=1||mini_option!=2||mini_option!=3||mini_option!=4)
+                }while(mini_option!=0)
                 p("continu ....")
                 console.clear()
                 break;
