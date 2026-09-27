@@ -400,12 +400,14 @@ do {
                 
                 switch (mini_option) {
                     case 1:
-                        {console.log(candidats.length);
+                        {console.clear()
+                        console.log(candidats.length);
                         p("continu ....")
                     console.clear()
                         break;}
                     case 2:
-                   { let cnt=0
+                   { console.clear()
+                    let cnt=0
                         for(let i = 0 ; i < candidats.length ; i++){
                             cnt += candidats[i].electeurs.length
                         }
@@ -414,9 +416,10 @@ do {
                     console.clear()
                         break;}
                     case 3:
-                   { tri(candidats)
+                   { console.clear()
+                    tri(candidats)
                     for(let i=0 ; i<3 ; i++){
-                      console.log("===========================");
+                      console.log("********************************");
                       console.log("==== candidats",i,": =========");
                       console.log("cin: ",candidats[i].cin,);
                       console.log("nom: ",candidats[i].nom,);
@@ -455,3 +458,4 @@ do {
         a = p("s'il vous plait choisissait vous un option valid : ")
     }
 } while (a != 0)
+ 
