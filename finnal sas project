@@ -1,33 +1,34 @@
 const p = require("prompt-sync")()
-
+let nbr=0
+let stat_tab = [{partiPolitique:"",nbr_des_vote:nbr}]
 let candidats = [
     { cin : "AA123456",
-	nom : "Boushaba",
-	prenom : "Soufiane",
-	partiPolitique : "Independant",
+	nom : "name1",
+	prenom : "name1",
+	partiPolitique : "IND",
 	age: 40,
-	electeurs: ["a","b","b","v","r"]
+	electeurs: ["e1","e2","e3","e4","e5"]
     },
     { cin : "AB123456",
-	nom : "boulama",
-	prenom : "Soufiane",
-	partiPolitique : "pam",
+	nom : "name2",
+	prenom : "name2",
+	partiPolitique : "PAM",
 	age: 40,
-	electeurs: ["s","d","e","e"]
+	electeurs: ["e6","e7","e8","e9"]
     },
       { cin : "AC123456",
-	nom : "Bouhafa",
-	prenom : "Soufiane",
-	partiPolitique : "Indépendant",
+	nom : "name3",
+	prenom : "name3",
+	partiPolitique : "IND",
 	age: 40,
-	electeurs: ["a","g","h","y","u","i","o"]
+	electeurs: ["e10","e11","e12","e13","e14","e15","e16"]
     },
         { cin : "AD123456",
-	nom : "Bokayo",
-	prenom : "Soufiane",
-	partiPolitique : "pam",
+	nom : "name4",
+	prenom : "name4",
+	partiPolitique : "PAM",
 	age: 40,
-	electeurs: [1,2]
+	electeurs: ["e17","e18"]
     }
 ]
 let a = 0
@@ -40,21 +41,23 @@ function Ajouter_un_nouveau_candidat(tab){
    let partiPolitiquev = ""
    let agev = 0
    let electeursv = []
-   let vote_numv = tab.length
+   let vote_numv = electeursv.length
     
     cinv = p("s'il vous plait introduiser le CIN : ");
+    cinv = cinv.toUpperCase()
     nomv = p("s'il vous plait intriduiser le nom : ")
+    nomv = nomv.toLowerCase()
     prenomv = p("s'il vous plait intriduiser le prenom  : ");
+    prenomv = prenomv.toLowerCase()
     partiPolitiquev = p("s'il vous plait intriduiser le partiPolitique : ");
-    agev = p("s'il vous plait intriduiser le age : ");
-    electeursv = p("s'il vous plait intriduiser le electeurs : ");
+    partiPolitiquev = partiPolitiquev.toUpperCase()
+    agev = Number (p("s'il vous plait intriduiser le age : "))
 
     tab.push({cin: cinv,nom: nomv ,prenom: prenomv ,age: agev ,electeurs: electeursv ,vote_num: vote_numv, })
         return(tab)
 
 }
 function  Ajouter_plusieurs_candidats_à_la_fois(tab) {
-    let electeuridv = 0
     do {  
    let option = 0
    let cinv = 0
@@ -66,19 +69,39 @@ function  Ajouter_plusieurs_candidats_à_la_fois(tab) {
    let vote_numv = electeursv.length
     
     cinv = p("s'il vous plait introduiser le CIN : ");
+    cinv = cinv.toUpperCase()
     nomv = p("s'il vous plait intriduiser le nom : ")
+    nomv = nomv.toLowerCase()
     prenomv = p("s'il vous plait intriduiser le prenom  : ");
+    prenomv = prenomv.toLowerCase()
     partiPolitiquev = p("s'il vous plait intriduiser le partiPolitique : ");
-    agev = p("s'il vous plait intriduiser le age : ");
-    electeursv = p("s'il vous plait intriduiser le electeurs : ");
+    partiPolitiquev = partiPolitiquev.toUpperCase()
+    agev = Number (p("s'il vous plait intriduiser le age : "))
 
     option = p("pour continuer l'ajoute tapper 1 sinon tapez autre chose : ")
    
-    tab.push({cin: cinv,nom: nomv ,prenom: prenomv ,age: agev ,electeurs: electeursv ,electeurid: electeuridv ,vote_num: vote_numv, })
-    electeuridv++
+    tab.push({cin: cinv,nom: nomv ,prenom: prenomv ,age: agev ,electeurs: electeursv ,vote_num: vote_numv, })
+    
 
 } while (option == 1);
         return(tab)
+}
+function tri_celon_char (tab ) { 
+    let aid 
+    for (let i = 0; i < tab.length; i++) {
+        for (let j= 0 ; j < tab.length; j++ ){
+            if (tab[i]?.partiPolitique > tab[j]?.partiPolitique)
+            {
+                aid = tab[i]
+                tab[i] = tab[j]
+                tab[j] = aid
+              }
+        
+        }
+        
+    }
+    return(tab)
+    
 }
 function tri (tab ) { 
     let aid 
@@ -99,7 +122,6 @@ function tri (tab ) {
 }
 function political (tab , x ) {  
     for (let i = 0; i < tab.length; i++) {
-        console.log(tab[i]?.partiPolitique);
         
             if (tab[i]?.partiPolitique == x)
             {
@@ -113,54 +135,114 @@ function Afficher_la_liste_des_candidats (tab) {
     
 }
 function Voter_pour_un_candidat__verification(cin , tab) {
+    let x = true
 for(let i = 0 ; i< tab.length; i++){
-    for(let j = 0 ; j<tab[i]?.electeurs.length;j++){
-        let aid = tab[i]?.electeurs[j]
+    for(let j = 0 ; j<tab[i].electeurs.length;j++){
+        let aid = tab[i].electeurs[j]
+        
     if(cin == aid){
-        console.log("!desole, vous avais deja electer !!");       
-    }
-    else if(cin != aid){
-        return(true)  
+        console.log("!desole, vous avais deja electer !!");
+        x = false       
     }
     }
+  
 }
-
-    
+return (x) 
+ 
 }
 function Modifier_les_informations(tab){
-    let cin_donner = p("saisissez-vous le signe du candidat a changer: ")
-    let age_donner = p("saisissez-vous l'age du candidat a changer: ")
-    let name_donner = p("saisissez-vous le nom du candidat a changer: ")
+   let choice
+   console.clear()
+   console.log("==== mini menu: =============");
+   console.log("choose option 1 pour changer l'age du candidat ");
+   console.log("choose option 2 pour changer la parti politique du candidat ");
+   console.log(" 0: <=== ");
+   console.log("");
+   
+   do{
+   choice = Number (p("choose option 1 pour 2 et 0 est pour quiter: "))
+   let cin_donner
+   let age_donner
+   let parti_donner
+switch (choice){
+
+case 1:
+     {console.clear()
+     cin_donner = p("saisissez-vous le cin du candidat a changer: ")
+     cin_donner = cin_donner.toUpperCase()
+     age_donner = Number (p("saisissez-vous l'age du candidat a changer: "))
 for(let i = 0; i < tab.length; i++){
     if(cin_donner== tab[i]?.cin){
-        tab[i].nom = name_donner
         tab[i].age = age_donner
     }
 }
+
+break;
+}
+case 2:{console.clear()
+    cin_donner = p("saisissez-vous le cin du candidat a changer: ")
+    cin_donner = cin_donner.toUpperCase()
+    parti_donner = p("saisissez-vous la parti politique du candidat a changer: ")
+    parti_donner = parti_donner.toLowerCase()
+for(let i = 0; i < tab.length; i++){
+    if(cin_donner== tab[i]?.cin){
+        tab[i].partiPolitique = parti_donner
+        }
+}
+break;
+}
+}
+} while(choice !=0)
 return(tab)
 }
+
 function Rechercher_des_candidats(tab ){
     let name_find = p("saisissez-vous le nom du candidat a changer: ")
+    let x = true
 for(let i = 0; i < tab.length; i++){
     if(name_find == tab[i]?.nom){
-        console.log(tab[i]);
+        x = false
+        console.log("candidats",i,":");
+        console.log("cin: ",candidats[i].cin,);
+        console.log("nom: ",candidats[i].nom,);
+        console.log("prenom: ",candidats[i].prenom,); 
+        console.log("partiPolitique: ",candidats[i].partiPolitique,); 
+        console.log("l'age: ",candidats[i].age,);
+        console.log("nbr des electeur: ",candidats[i].electeurs.length,); 
     }
     
 }
-console.log("aucun candidat a ce nom ");
+if(x){console.log("aucun candidat a ce nom ");}
 
-return(tab)
 }
 function supresion_des_informations(tab , x){
-    let name_find = p("saisissez-vous le nom du candidat a changer: ")
+    let y = true
 for(let i = 0; i < tab.length; i++){
-    if(name_find == tab[i]?.nom){
-        console.log(tab[i]);
+    if(x == tab[i]?.cin){
+        tab.splice(i , i);
+        console.log("suprimé avec succes ! ")
+        y = false
+        break;
+    }
+    if(y){console.log("entrez-vous un valable candidat");
     }
     
 }}
+
+function Afficher_le_nombre_de_candidats_par_parti_politique(tab , x){
+    let tablo = []
+for(let i = 0; i < tab.length; i++){
+    if(tab[i]?.partiPolitique == x){
+    tablo.push(tab[i])
+    }
+    }
+    let t = tablo.length
+    console.log(x,t)
+}
+
+
 do {
-    
+    console.clear()
     console.log("");
     console.log("==== options =======================");
     console.log("");
@@ -175,8 +257,6 @@ do {
     console.log("0. quitter")
     console.log("====================================");
     console.log("====================================");
-    
-
     console.log("");
     a = Number (p("s'il vous plait choisissait vous un option de 1 à 8 et 0 puor quitter le programme : "))
     if (a >= 0 && a <= 8 ) {
@@ -203,18 +283,28 @@ do {
                 console.log("==== mini menu: =============");
                 console.log("1. Trier les candidats par nombre de votes");
                 console.log("2. Filtrer et afficher uniquement les candidats d'un parti politique");
+                console.log("0. <===")
                 console.log("=============================");
                 console.log("");
-                mini_option = Number (p("s'il vous plait choisissait vous un option entre 1 et 2 : "))
+                mini_option = Number (p("s'il vous plait choisissait vous un option entre 1 et 2 et 0 pour quitter : "))
                 
                 switch (mini_option) {
-                    case 1:
-                        {console.log(candidats);
+                    case 1:{
+                       for ( let i = 0 ; i < candidats.length ; i++)
+                    { console.log("candidats",i,":");
+                      console.log("cin: ",candidats[i].cin,);
+                      console.log("nom: ",candidats[i].nom,);
+                      console.log("prenom: ",candidats[i].prenom,); 
+                      console.log("partiPolitique: ",candidats[i].partiPolitique,); 
+                      console.log("l'age: ",candidats[i].age,);
+                      console.log("nbr des electeur: ",candidats[i].electeurs.length,);                            
+                        }
                         p("continu ....")
                     console.clear()
                         break;}
                     case 2:
                    { let partie = p("s'il vous plait choisissait vous un partie politique : ")
+                    partie = partie.toUpperCase
                         political (candidats , partie )
                         p("continu ....")
                     console.clear()
@@ -227,21 +317,29 @@ do {
                 break;
             }
             case 4: {
-                let cnt
+                let cnt = 0
                 console.log("");
                 let cin_per= p("entrer vous votre CIN: ");
+                cin_per = cin_per.toUpperCase()
                 console.log("");               
                 if(Voter_pour_un_candidat__verification(cin_per , candidats)){
                 let cin_con= p("entrer vous le CIN de votre candidat favorable : ");
+                cin_con = cin_con.toUpperCase()
+                console.log(cin_con);
+                
                 for (let i = 0; i< candidats.length;i++){
-                    if(cin_con == candidats[i]?.cin){
+                    if(cin_con == candidats[i]?.cin && cin_con != ""){
                      candidats[i].electeurs.push(cin_per)
                     }
-                    else if (cin_con != candidats[i]?.cin){
-                     cnt=true
+                    else if (cin_con != candidats[i].cin){
+                     cnt++
+                     console.log(candidats.length);
+                     console.log(cnt);
+                     
+                     
                     }
                 }
-                if(cnt){console.log("entrez-vous un valable candidat");}
+                if(cnt==candidats.length){console.log("entrez-vous un valable candidat");}
                 }
                 p("continu ....")
                 console.clear()
@@ -252,16 +350,21 @@ do {
                 console.clear()    
                 break;}
             case 6: {
-                supresion_des_informations(candidats , elementasup)
+                console.clear()
+                cin_a_suprimer = p("entez-vous le CIN du candidat a supprimer: ")
+                cin_a_suprimer = cin_a_suprimer.toUpperCase()
+                supresion_des_informations(candidats , cin_a_suprimer)
                 p("continu ....")
                 console.clear()    
                 break;}console
             case 7: {
+                console.clear()
                 Rechercher_des_candidats(candidats)
                 p("continu ....")
                 console.clear()    
                 break;}
             case 8: {
+                console.clear()
                 let mini_option=0
                 do{
                 console.clear()
@@ -270,9 +373,11 @@ do {
                 console.log("2. Afficher le nombre total de votes exprimés dans toute l'élection");
                 console.log("3. Afficher le Top 3 des candidats ayant le plus de votes");
                 console.log("4. Afficher le nombre de candidats par parti politique");
+                console.log("0. <===");
+
                 console.log("=============================");
                 console.log("");
-                mini_option = Number (p("s'il vous plait choisissait vous un option entre 1 et 2 : "))
+                mini_option = Number (p("s'il vous plait choisissait vous un option entre 1, 2, 3, 4 et 0 pour quitter: "))
                 
                 switch (mini_option) {
                     case 1:
@@ -283,27 +388,37 @@ do {
                     case 2:
                    { let cnt=0
                         for(let i = 0 ; i < candidats.length ; i++){
-                            cnt += tab[i]?.electeurs.length
+                            cnt += candidats[i].electeurs.length
                         }
-                        console.log("cnt")
+                        console.log(cnt)
                         p("continu ....")
                     console.clear()
                         break;}
                     case 3:
                    { tri(candidats)
                     for(let i=0 ; i<3 ; i++){
-                    console.log(candidats[i]);
+                      console.log("===========================");
+                      console.log("==== candidats",i,": =========");
+                      console.log("cin: ",candidats[i].cin,);
+                      console.log("nom: ",candidats[i].nom,);
+                      console.log("prenom: ",candidats[i].prenom,); 
+                      console.log("partiPolitique: ",candidats[i].partiPolitique,); 
+                      console.log("l'age: ",candidats[i].age,);
+                      console.log("nbr des electeur: ",candidats[i].electeurs.length,);}
                     p("continu ....")
                     console.clear()
                         break;
                     }
-                }
-                    case 4:
-                   { let partie = p("s'il vous plait choisissait vous un partie politique : ")
-                        political (candidats , partie )
+                
+                    case 4:{
+                    tri_celon_char (candidats )
+                   let partie = p("s'il vous plait choisissait vous un partie politique : ")
+                   partie = partie.toUpperCase()
+                    Afficher_le_nombre_de_candidats_par_parti_politique(candidats , partie)
                         p("continu ....")
                     console.clear()
-                        break;}
+                        break;
+                    }
 
                 }
                 }while(mini_option!=0)
