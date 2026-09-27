@@ -1,6 +1,6 @@
 const p = require("prompt-sync")()
 let nbr=0
-let stat_tab = [{partiPolitique:"",nbr_des_vote:nbr}]
+let stat_tab = []
 let candidats = [
     { cin : "AA123456",
 	nom : "name1",
@@ -228,12 +228,31 @@ for(let i = 0; i < tab.length; i++){
     }
     
 }}
+function return_des_partie_politic(tab){
+    let d
+    for(let i = 0 ; i<tab.length ; i++){
+        d = 0
+        for(let j = 0 ; j<tab.length ; j++)
+        {
+            if(tab[i].partiPolitique != stat_tab[j]){
+            d++
+        }
+
+        }
+        if (d == tab.length)
+        {
+            stat_tab.push(tab[i].partiPolitique)
+        }
+            
+            
+    }
+}
 
 function Afficher_le_nombre_de_candidats_par_parti_politique(tab , x){
     let tablo = []
 for(let i = 0; i < tab.length; i++){
-    if(tab[i]?.partiPolitique == x){
-    tablo.push(tab[i])
+    if(tab[i].partiPolitique == x){
+    tablo.push("")
     }
     }
     let t = tablo.length
@@ -411,10 +430,15 @@ do {
                     }
                 
                     case 4:{
-                    tri_celon_char (candidats )
-                   let partie = p("s'il vous plait choisissait vous un partie politique : ")
+                    console.clear()
+                    tri_celon_char (candidats)
+                    return_des_partie_politic(candidats)
+                   for(let i = 0;i<stat_tab.length;i++)
+                    {
+                        let partie = stat_tab[i]
                    partie = partie.toUpperCase()
                     Afficher_le_nombre_de_candidats_par_parti_politique(candidats , partie)
+                }
                         p("continu ....")
                     console.clear()
                         break;
@@ -431,4 +455,3 @@ do {
         a = p("s'il vous plait choisissait vous un option valid : ")
     }
 } while (a != 0)
- 
